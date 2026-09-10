@@ -1,19 +1,35 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { api } from '../services/api';
 
 const RecordsContext = createContext(null);
 
 export function RecordsProvider({ children }) {
     const [records, setRecords] = useState([]);
+    const [apiError, setApiError] = useState('');
 
-    const addRecord = (record) => {
-        setRecords((current) => [
-            ...current,
-            { ...record, id: `${Date.now()}-${current.length}` },
-        ]);
+    useEffect(() => {
+        api.listarHistorico()
+            .then(setRecords)
+            .catch((error) => setApiError(error.message));
+    }, []);
+
+    const addRecord = async (record) => {
+        const saved = await api.registrarEntrada(record);
+        const normalized = saved.aluno
+            ? { ...record, ...saved.aluno, id: saved.id, data: saved.data }
+            : saved;
+        setRecords((current) => [normalized, ...current]);
+        return normalized;
+    };
+
+    const addStudent = async (student) => {
+        const saved = await api.cadastrarAluno(student);
+        setApiError('');
+        return saved;
     };
 
     return (
-        <RecordsContext.Provider value={{ addRecord, records }}>
+        <RecordsContext.Provider value={{ addRecord, addStudent, apiError, records }}>
             {children}
         </RecordsContext.Provider>
     );

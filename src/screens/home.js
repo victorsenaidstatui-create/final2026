@@ -21,8 +21,8 @@ export default function Home({ navigation }) {
                 <AppLogo />
                 <View style={styles.heading}>
                     <View>
-                        <Text style={styles.title}>PAINEL</Text>
-                        <Text style={styles.date}>RESUMO DE HOJE</Text>
+                        <Text style={styles.title}>INÍCIO</Text>
+                        <Text style={styles.date}>CONTROLE DE ENTRADAS</Text>
                     </View>
                     <Ionicons color="#ed1c24" name="bar-chart-outline" size={32} />
                 </View>
@@ -64,13 +64,17 @@ export default function Home({ navigation }) {
                 </View>
 
                 <View style={styles.actions}>
-                    <Pressable onPress={() => navigation.navigate('Cadastro_User')} style={styles.button}>
+                    <Pressable onPress={() => navigation.navigate('RegistrarEntrada')} style={styles.button}>
                         <Ionicons color={colors.white} name="add-circle-outline" size={23} />
-                        <Text style={styles.buttonText}>NOVO REGISTRO</Text>
+                        <Text style={styles.buttonText}>REGISTRAR ENTRADA</Text>
+                    </Pressable>
+                    <Pressable onPress={() => navigation.navigate('Cadastro_User')} style={styles.historyButton}>
+                        <Ionicons color="#ed1c24" name="person-add-outline" size={21} />
+                        <Text style={styles.historyButtonText}>CADASTRAR ALUNO</Text>
                     </Pressable>
                     <Pressable onPress={() => navigation.navigate('Historico')} style={styles.historyButton}>
                         <Ionicons color="#ed1c24" name="time-outline" size={21} />
-                        <Text style={styles.historyButtonText}>VER HISTÓRICO</Text>
+                        <Text style={styles.historyButtonText}>HISTÓRICO</Text>
                     </Pressable>
                 </View>
             </ScrollView>

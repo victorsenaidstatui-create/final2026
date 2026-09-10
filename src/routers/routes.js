@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cadastro_User from '../screens/cadastro_user';
 import Home from '../screens/home';
 import Historico from '../screens/historico';
+import RegistrarEntrada from '../screens/registrar_entrada';
 import Splash from '../screens/splash';
 
 export default function Router() {
@@ -12,6 +13,7 @@ export default function Router() {
             <Stack.Screen name="Splash" component={Splash} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Cadastro_User" component={Cadastro_User} />
+            <Stack.Screen name="RegistrarEntrada" component={RegistrarEntrada} />
             <Stack.Screen name="Historico" component={Historico} />
 
         </Stack.Navigator>
