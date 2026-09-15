@@ -1,52 +1,38 @@
 import { Platform } from 'react-native';
 
-const getDefaultApiUrl = () => {
-    if (typeof window !== 'undefined') {
-        return 'http://127.0.0.1:8000/api';
-    }
+const normalizeUrl = (value) => (value || '').trim().replace(/\/+$/, '');
 
-    if (Platform.OS === 'ios') {
-        return 'http://127.0.0.1:8000/api';
-    }
+const getBaseApiUrl = () => {
+    const configured = normalizeUrl(process.env.EXPO_PUBLIC_API_URL);
+    if (configured) return configured;
 
-    return 'http://10.0.2.2:8000/api';
+    return Platform.OS === 'android'
+        ? 'http://10.0.2.2:8000/api'
+        : 'http://127.0.0.1:8000/api';
 };
 
-export const API_URL = process.env.EXPO_PUBLIC_API_URL || getDefaultApiUrl();
-
-const getApiUrls = () => {
-    if (process.env.EXPO_PUBLIC_API_URL) {
-        return [process.env.EXPO_PUBLIC_API_URL];
-    }
-
-    const localUrl = 'http://127.0.0.1:8000/api';
-    const androidHostUrl = 'http://10.0.2.2:8000/api';
-
-    return Platform.OS === 'android' ? [androidHostUrl, localUrl] : [localUrl, androidHostUrl];
-};
+export const API_URL = getBaseApiUrl();
 
 async function request(path, options = {}) {
-    let lastError;
+    const baseUrl = getBaseApiUrl();
+    const url = `${baseUrl}${path.startsWith('/') ? path : `/${path}`}`;
 
-    for (const baseUrl of getApiUrls()) {
-        try {
-            const response = await fetch(`${baseUrl}${path}`, {
-                headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-                ...options,
-            });
-            const payload = await response.json().catch(() => ({}));
+    const response = await fetch(url, {
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        ...options,
+    });
 
-            if (!response.ok) {
-                throw new Error(payload.message || `API respondeu com erro ${response.status}.`);
-            }
+    const rawText = await response.text();
+    const payload = rawText ? JSON.parse(rawText) : {};
 
-            return payload;
-        } catch (error) {
-            lastError = error;
-        }
+    if (!response.ok) {
+        throw new Error(payload.message || payload.error || `API respondeu com erro ${response.status}.`);
     }
 
-    throw new Error(`${lastError?.message || 'Não foi possível acessar a API.'} Verifique se o Laravel está rodando na porta 8000.`);
+    return payload;
 }
 
 export const api = {
@@ -57,6 +43,12 @@ export const api = {
         const query = params.toString();
         return request(`/historico${query ? `?${query}` : ''}`);
     },
-    cadastrarAluno: (aluno) => request('/alunos', { method: 'POST', body: JSON.stringify(aluno) }),
-    registrarEntrada: (entrada) => request('/entradas', { method: 'POST', body: JSON.stringify(entrada) }),
+    cadastrarAluno: (aluno) => request('/alunos', {
+        method: 'POST',
+        body: JSON.stringify(aluno),
+    }),
+    registrarEntrada: (entrada) => request('/entradas', {
+        method: 'POST',
+        body: JSON.stringify(entrada),
+    }),
 };
