@@ -30,9 +30,6 @@ export default function Home({ navigation }) {
                 <View style={styles.metrics}>
                     {metrics.map((metric) => (
                         <View key={metric.label} style={styles.metric}>
-                            <View style={[styles.metricIcon, { backgroundColor: metric.color }]}>
-                                <Ionicons color={colors.white} name={metric.icon} size={24} />
-                            </View>
                             <Text style={styles.metricValue}>{metric.value}</Text>
                             <Text style={styles.metricLabel}>{metric.label}</Text>
                         </View>
@@ -94,13 +91,10 @@ const styles = StyleSheet.create({
     metrics: { flexDirection: 'row', gap: 8, justifyContent: 'space-between' },
     metric: {
         backgroundColor: '#f4f4f4', borderColor: '#dddddd', borderRadius: 12,
-        borderWidth: 1, flex: 1, minHeight: 142, padding: 10,
+        borderWidth: 1, flex: 1, justifyContent: 'center', minHeight: 142, padding: 12,
     },
-    metricIcon: {
-        alignItems: 'center', borderRadius: 18, height: 36, justifyContent: 'center', width: 36,
-    },
-    metricValue: { color: '#111111', fontSize: 28, fontWeight: '800', marginTop: 10 },
-    metricLabel: { color: '#555555', fontSize: 11, fontWeight: '700', lineHeight: 14, marginTop: 4 },
+    metricValue: { color: '#111111', fontSize: 28, fontWeight: '800' },
+    metricLabel: { color: '#555555', fontSize: 11, fontWeight: '700', lineHeight: 14, marginTop: 6 },
     alertSection: { marginTop: 24 },
     sectionHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
     sectionTitle: { color: '#111111', fontSize: 19, fontWeight: '800' },

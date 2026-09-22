@@ -15,9 +15,16 @@ export function RecordsProvider({ children }) {
 
     const addRecord = async (record) => {
         const saved = await api.registrarEntrada(record);
-        const normalized = saved.aluno
-            ? { ...record, ...saved.aluno, id: saved.id, data: saved.data }
-            : saved;
+        const payload = saved?.registro || saved?.aluno || saved;
+        const normalized = {
+            ...record,
+            ...(payload && typeof payload === 'object' ? payload : {}),
+            nome: payload?.nome || record.nome,
+            turma: payload?.turma || record.turma,
+            horario: payload?.horario || record.horario,
+            atividade: payload?.atividade || record.atividade,
+            data: payload?.data || record.data || new Date().toISOString().slice(0, 10),
+        };
         setRecords((current) => [normalized, ...current]);
         return normalized;
     };

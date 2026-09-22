@@ -35,19 +35,41 @@ async function request(path, options = {}) {
     return payload;
 }
 
+function asList(payload) {
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.data)) return payload.data;
+    if (Array.isArray(payload?.result)) return payload.result;
+    if (Array.isArray(payload?.items)) return payload.items;
+
+    const arrayValue = Object.values(payload || {}).find(Array.isArray);
+    if (arrayValue) return arrayValue;
+
+    return [];
+}
+
 export const api = {
     listarHistorico: (filters = {}) => {
         const params = new URLSearchParams();
         if (filters.nome) params.set('nome', filters.nome);
         if (filters.turma) params.set('turma', filters.turma);
         const query = params.toString();
-        return request(`/historico${query ? `?${query}` : ''}`);
+        return request(`/historico${query ? `?${query}` : ''}`)
+            .then((payload) => asList(payload))
+            .then((items) => items.map((item) => ({
+                id: item.id,
+                nome: item.nome || item.aluno?.nome || '',
+                turma: item.turma || item.aluno?.turma || '',
+                horario: item.horario || '',
+                atividade: item.atividade || '',
+                data: item.data || '',
+                observacao: item.observacao || '',
+            })));
     },
     cadastrarAluno: (aluno) => request('/alunos', {
         method: 'POST',
         body: JSON.stringify(aluno),
     }),
-    registrarEntrada: (entrada) => request('/entradas', {
+    registrarEntrada: (entrada) => request('/registros', {
         method: 'POST',
         body: JSON.stringify(entrada),
     }),
