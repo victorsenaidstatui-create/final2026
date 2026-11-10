@@ -1,95 +1,67 @@
-# Sistema de Controle de Entrada na Cozinha
+# Sistema Mobile de Controle de Entrada na Cozinha
 
-## Sobre o projeto
+## Sobre o Projeto
 
-Este projeto consiste no desenvolvimento de um sistema para controlar e registrar a entrada de alunos na cozinha da escola durante o horário de almoço.
+O projeto consiste no desenvolvimento de uma versão mobile do Sistema de Controle de Entrada na Cozinha, criado para facilitar o registro e o acompanhamento dos alunos que utilizam a cozinha da escola durante o horário de almoço.
 
-Atualmente, os registros são realizados manualmente em uma folha de papel. Esse processo pode permitir que alguns alunos entrem sem preencher as informações necessárias. O sistema busca tornar esse controle mais organizado, prático e seguro.
+Atualmente, o registro é realizado manualmente por meio de uma ficha de papel. Com a utilização do aplicativo mobile, a proposta é tornar esse processo mais prático, organizado e acessível.
 
 ## Objetivo
 
-Desenvolver uma aplicação que permita registrar as entradas dos alunos, armazenar os dados em um banco de dados e consultar o histórico de movimentações. A proposta também prevê a integração com dispositivos eletrônicos para identificar entradas sem registro e acionar um alerta.
+Desenvolver um aplicativo mobile que permita registrar e consultar as entradas dos alunos na cozinha, facilitando o controle das informações e reduzindo a necessidade de registros em papel.
 
-## Como funciona
+## Como Funciona
 
-1. O aluno realiza seu registro no sistema.
-2. Informa nome, turma, horário e atividade ou motivo da entrada.
-3. O sistema valida as informações e salva o registro no banco de dados.
-4. Os registros podem ser consultados posteriormente no histórico.
-5. Na etapa de integração com os dispositivos, uma entrada sem registro poderá gerar um alerta.
+1. O aluno acessa o aplicativo pelo dispositivo móvel.
+2. Realiza seu cadastro ou identificação no sistema.
+3. Informa os dados necessários para registrar sua entrada.
+4. O aplicativo envia as informações para o sistema.
+5. Os registros ficam armazenados no banco de dados e podem ser consultados posteriormente.
 
 ## Funcionalidades
 
-- Cadastro e identificação de alunos.
+- Acesso ao sistema por dispositivo móvel.
+- Identificação dos alunos.
 - Registro de entrada na cozinha.
-- Armazenamento dos registros em banco de dados.
-- Consulta ao histórico de entradas.
-- Integração prevista com dispositivos eletrônicos e RFID.
-- Possibilidade de emitir alertas para entradas sem registro.
+- Consulta das informações registradas.
+- Integração com o sistema e banco de dados.
+- Possibilidade de integração com dispositivos RFID e sensores.
 
-## Tecnologias
+## Tecnologias Utilizadas
 
-- **Laravel / PHP:** desenvolvimento do backend e das rotas da aplicação.
-- **HTML e CSS:** estrutura e estilização das páginas.
-- **JavaScript e jQuery:** interações e requisições assíncronas (AJAX).
-- **MySQL:** armazenamento dos dados.
-- **RFID e dispositivos eletrônicos:** previstos para a identificação e automação do controle de entrada.
+- **React Native:** desenvolvimento da aplicação mobile.
+- **JavaScript:** lógica e funcionalidades do aplicativo.
+- **API:** comunicação com o servidor.
+- **Banco de dados:** armazenamento das informações.
 
-## Requisitos
+## Instalação e Execução
 
-- PHP e Composer instalados.
-- Banco de dados MySQL.
-- Node.js e npm, caso sejam necessárias dependências de frontend.
-
-## Instalação e execução
-
-1. Clone o repositório na branch do projeto:
+### 1. Clonar o repositório
 
 ```bash
-git clone -b feature/victor https://github.com/victorsenaidstatui-create/final2026.git
-cd final2026
+git clone LINK_DO_REPOSITORIO
 ```
 
-2. Instale as dependências PHP:
+### 2. Entrar na pasta do projeto
 
 ```bash
-composer install
+cd NOME_DO_PROJETO
 ```
 
-3. Crie o arquivo de ambiente:
+### 3. Instalar as dependências
 
 ```bash
-cp .env.example .env
+npm install
 ```
 
-No Windows, se o comando acima não funcionar, copie manualmente o arquivo `.env.example` e renomeie a cópia para `.env`.
-
-4. Configure no arquivo `.env` os dados de conexão com o banco de dados.
-
-5. Gere a chave da aplicação:
+### 4. Iniciar o projeto
 
 ```bash
-php artisan key:generate
+npx expo start
 ```
 
-6. Execute as migrações, se o banco estiver configurado:
+Após iniciar, siga as instruções exibidas no terminal para abrir o aplicativo no dispositivo móvel ou em um emulador.
 
-```bash
-php artisan migrate
-```
+## Finalidade Acadêmica
 
-7. Inicie o servidor local:
-
-```bash
-php artisan serve
-```
-
-A aplicação ficará disponível em:
-
-```
-http://127.0.0.1:8000
-```
-
-## Finalidade acadêmica
-
-Projeto desenvolvido com finalidade educacional, aplicando conhecimentos de desenvolvimento web, banco de dados, integração de sistemas e automação.
+Este projeto foi desenvolvido com finalidade acadêmica, buscando aplicar conhecimentos de desenvolvimento mobile, integração com APIs e banco de dados para melhorar o processo de controle de entrada dos alunos na cozinha da escola.
